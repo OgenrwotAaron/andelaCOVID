@@ -54,14 +54,14 @@ const covid19ImpactEstimator = (data) => {
   const reported = Big(reportedCases);
 
   const impact = {
-    currentlyInfected: reported.times(10),
+    currentlyInfected: reported * 10,
     get infectionsByRequestedTime() {
       return infections(this.currentlyInfected, timeToE, periodT);
     }
   };
 
   const severeImpact = {
-    currentlyInfected: reported.times(50),
+    currentlyInfected: reported * 50,
     get infectionsByRequestedTime() {
       return infections(this.currentlyInfected, timeToE, periodT);
     }
