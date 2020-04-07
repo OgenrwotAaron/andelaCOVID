@@ -48,7 +48,7 @@ const infections = (currentlyInfected, timeToElapse, periodType) => {
 };
 
 const bedsByRequestedTime = (totalHospitalBeds, severeCasesByRequestedTime) => {
-  const available = Math.trunc(totalHospitalBeds * 0.35);
+  const available = totalHospitalBeds * 0.35;
   return available - severeCasesByRequestedTime;
 };
 
