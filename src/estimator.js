@@ -79,7 +79,7 @@ const covid19ImpactEstimator = (data) => {
       return Math.trunc(this.infectionsByRequestedTime * 0.05);
     },
     get casesForVentilatorsByRequestedTime() {
-      return Math.trunc(this.infectionsByRequestedTime * 0.02);
+      return this.infectionsByRequestedTime * 0.02;
     },
     get dollarsInFlight() {
       return this.infectionsByRequestedTime * 0.65 * 1.5 * 30;
@@ -101,7 +101,7 @@ const covid19ImpactEstimator = (data) => {
       return Math.trunc(this.infectionsByRequestedTime * 0.05);
     },
     get casesForVentilatorsByRequestedTime() {
-      return Math.trunc(this.infectionsByRequestedTime * 0.02);
+      return this.infectionsByRequestedTime * 0.02;
     },
     get dollarsInFlight() {
       return this.infectionsByRequestedTime * 0.65 * 1.5 * 30;
