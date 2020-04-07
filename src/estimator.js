@@ -29,18 +29,18 @@ const infections = (currentlyInfected, timeToElapse, periodType) => {
   let days;
   switch (periodType) {
     case 'days':
-      infectionsByRequestedTime = currentlyInfected * (2 ** Math.trunc(timeToElapse / 3));
+      infectionsByRequestedTime = currentlyInfected * (2 ** (Math.trunc(timeToElapse / 3)));
       break;
     case 'weeks':
       days = timeToElapse * 7;
-      infectionsByRequestedTime = currentlyInfected * (2 ** Math.trunc(days / 3));
+      infectionsByRequestedTime = currentlyInfected * (2 ** (Math.trunc(days / 3)));
       break;
     case 'months':
       days = timeToElapse * 30;
-      infectionsByRequestedTime = currentlyInfected * (2 ** Math.trunc(days / 3));
+      infectionsByRequestedTime = currentlyInfected * (2 ** (Math.trunc(days / 3)));
       break;
     default:
-      infectionsByRequestedTime = currentlyInfected * (2 ** Math.trunc(timeToElapse / 3));
+      infectionsByRequestedTime = currentlyInfected * (2 ** (Math.trunc(timeToElapse / 3)));
       break;
   }
 
@@ -53,13 +53,19 @@ const covid19ImpactEstimator = (data) => {
   const timeToE = Big(timeToElapse);
   const reported = Big(reportedCases);
 
-  const impact = {};
-  impact.currentlyInfected = reported * Big(10);
-  impact.infectionsByRequestedTime = infections(impact.currentlyInfected, timeToE, periodT);
+  const impact = {
+    currentlyInfected: reported.times(10),
+    get infectionsByRequestedTime() {
+      return infections(this.currentlyInfected, timeToE, periodT);
+    }
+  };
 
-  const severeImpact = {};
-  severeImpact.currentlyInfected = reported * Big(50);
-  severeImpact.infectionsByRequestedTime = infections(impact.currentlyInfected, timeToE, periodT);
+  const severeImpact = {
+    currentlyInfected: reported.times(50),
+    get infectionsByRequestedTime() {
+      return infections(this.currentlyInfected, timeToE, periodT);
+    }
+  };
 
   return {
     data,
