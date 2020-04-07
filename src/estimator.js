@@ -52,6 +52,28 @@ const bedsByRequestedTime = (totalHospitalBeds, severeCasesByRequestedTime) => {
   return available - severeCasesByRequestedTime;
 };
 
+const dollarsInFlght = (infectionsBRTime, avgDIPopulation, avgDailyIIUSD, timeToE, periodType) => {
+  let inflight = null;
+  let days;
+  switch (periodType) {
+    case 'days':
+      inflight = infectionsBRTime * avgDIPopulation * avgDailyIIUSD * timeToE;
+      break;
+    case 'weeks':
+      days = timeToE * 7;
+      inflight = infectionsBRTime * avgDIPopulation * avgDailyIIUSD * days;
+      break;
+    case 'months':
+      days = timeToE * 30;
+      inflight = infectionsBRTime * avgDIPopulation * avgDailyIIUSD * days;
+      break;
+    default:
+      inflight = infectionsBRTime * avgDIPopulation * avgDailyIIUSD * timeToE;
+      break;
+  }
+  return inflight;
+};
+
 const covid19ImpactEstimator = (data) => {
   const {
     reportedCases,
@@ -59,10 +81,15 @@ const covid19ImpactEstimator = (data) => {
     periodType,
     totalHospitalBeds
   } = data;
+
+  const { avgDailyIncomeInUSD, avgDailyIncomePopulation } = data.region;
+
   const periodT = periodType;
   const timeToE = Big(timeToElapse);
   const reported = Big(reportedCases);
   const hospitalBeds = Big(totalHospitalBeds);
+  const avgDailyIncome = Big(avgDailyIncomeInUSD);
+  const avgDailyPn = Big(avgDailyIncomePopulation);
 
   const impact = {
     currentlyInfected: reported * 10,
@@ -79,10 +106,16 @@ const covid19ImpactEstimator = (data) => {
       return Math.trunc(this.infectionsByRequestedTime * 0.05);
     },
     get casesForVentilatorsByRequestedTime() {
-      return this.infectionsByRequestedTime * 0.02;
+      return Math.trunc(this.infectionsByRequestedTime * 0.02);
     },
     get dollarsInFlight() {
-      return this.infectionsByRequestedTime * 0.65 * 1.5 * 30;
+      return dollarsInFlght(
+        this.infectionsByRequestedTime,
+        avgDailyPn,
+        avgDailyIncome,
+        timeToE,
+        periodT
+      );
     }
   };
 
@@ -101,10 +134,16 @@ const covid19ImpactEstimator = (data) => {
       return Math.trunc(this.infectionsByRequestedTime * 0.05);
     },
     get casesForVentilatorsByRequestedTime() {
-      return this.infectionsByRequestedTime * 0.02;
+      return Math.trunc(this.infectionsByRequestedTime * 0.02);
     },
     get dollarsInFlight() {
-      return this.infectionsByRequestedTime * 0.65 * 1.5 * 30;
+      return dollarsInFlght(
+        this.infectionsByRequestedTime,
+        avgDailyPn,
+        avgDailyIncome,
+        timeToE,
+        periodT
+      );
     }
   };
 
