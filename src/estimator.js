@@ -1,3 +1,4 @@
+const Big = require('big-js');
 // Input data structured as
 /* {
     region: {
@@ -22,41 +23,43 @@
 }
 */
 
-// Returns the infectionsByRequestTime value
+// Returns the infectionsByRequestedTime value
 const infections = (currentlyInfected, timeToElapse, periodType) => {
-  let infectionsByRequestTime = null;
+  let infectionsByRequestedTime = null;
   let days;
   switch (periodType) {
     case 'days':
-      infectionsByRequestTime = currentlyInfected * (2 ** Math.trunc(timeToElapse / 3));
+      infectionsByRequestedTime = currentlyInfected * (2 ** Math.trunc(timeToElapse / 3));
       break;
     case 'weeks':
       days = timeToElapse * 7;
-      infectionsByRequestTime = currentlyInfected * (2 ** Math.trunc(days / 3));
+      infectionsByRequestedTime = currentlyInfected * (2 ** Math.trunc(days / 3));
       break;
     case 'months':
       days = timeToElapse * 30;
-      infectionsByRequestTime = currentlyInfected * (2 ** Math.trunc(days / 3));
+      infectionsByRequestedTime = currentlyInfected * (2 ** Math.trunc(days / 3));
       break;
     default:
-      infectionsByRequestTime = currentlyInfected * (2 ** Math.trunc(timeToElapse / 3));
+      infectionsByRequestedTime = currentlyInfected * (2 ** Math.trunc(timeToElapse / 3));
       break;
   }
 
-  return infectionsByRequestTime;
+  return infectionsByRequestedTime;
 };
 
 const covid19ImpactEstimator = (data) => {
   const { reportedCases, timeToElapse, periodType } = data;
-  const period = periodType;
+  const periodT = periodType;
+  const timeToE = Big(timeToElapse);
+  const reported = Big(reportedCases);
 
   const impact = {};
-  impact.currentlyInfected = reportedCases * 10;
-  impact.infectionsByRequestTime = infections(impact.currentlyInfected, timeToElapse, period);
+  impact.currentlyInfected = reported * Big(10);
+  impact.infectionsByRequestedTime = infections(impact.currentlyInfected, timeToE, periodT);
 
   const severeImpact = {};
-  severeImpact.currentlyInfected = reportedCases * 50;
-  severeImpact.infectionsByRequestTime = infections(impact.currentlyInfected, timeToElapse, period);
+  severeImpact.currentlyInfected = reported * Big(50);
+  severeImpact.infectionsByRequestedTime = infections(impact.currentlyInfected, timeToE, periodT);
 
   return {
     data,
