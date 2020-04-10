@@ -115,13 +115,13 @@ const covid19ImpactEstimator = (data) => {
       return casesForVentilators(this.infectionsByRequestedTime);
     },
     get dollarsInFlight() {
-      return dollarsInFlght(
+      return Math.trunc(dollarsInFlght(
         this.infectionsByRequestedTime,
         avgDailyPn,
         avgDailyIncome,
         timeToE,
         periodT
-      );
+      ));
     }
   };
 
@@ -143,13 +143,13 @@ const covid19ImpactEstimator = (data) => {
       return casesForVentilators(this.infectionsByRequestedTime);
     },
     get dollarsInFlight() {
-      return dollarsInFlght(
+      return Math.trunc(dollarsInFlght(
         this.infectionsByRequestedTime,
         avgDailyPn,
         avgDailyIncome,
         timeToE,
         periodT
-      );
+      ));
     }
   };
 
