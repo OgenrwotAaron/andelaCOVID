@@ -112,7 +112,7 @@ const covid19ImpactEstimator = (data) => {
       return casesForICU(this.infectionsByRequestedTime);
     },
     get casesForVentilatorsByRequestedTime() {
-      return casesForVentilators(this.infectionsByRequestedTime) ;
+      return casesForVentilators(this.infectionsByRequestedTime);
     },
     get dollarsInFlight() {
       return dollarsInFlght(
@@ -140,7 +140,7 @@ const covid19ImpactEstimator = (data) => {
       return casesForICU(this.infectionsByRequestedTime);
     },
     get casesForVentilatorsByRequestedTime() {
-      return casesForVentilators(this.infectionsByRequestedTime) ;
+      return casesForVentilators(this.infectionsByRequestedTime);
     },
     get dollarsInFlight() {
       return dollarsInFlght(
