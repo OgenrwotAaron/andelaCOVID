@@ -57,21 +57,21 @@ const dollarsInFlght = (infectionsBRTime, avgDIPopulation, avgDailyIIUSD, timeTo
   let days;
   switch (periodType) {
     case 'days':
-      inflight = infectionsBRTime * avgDIPopulation * avgDailyIIUSD * timeToE;
+      inflight = (infectionsBRTime * avgDIPopulation * avgDailyIIUSD) / timeToE;
       break;
     case 'weeks':
       days = timeToE * 7;
-      inflight = infectionsBRTime * avgDIPopulation * avgDailyIIUSD * days;
+      inflight = (infectionsBRTime * avgDIPopulation * avgDailyIIUSD) / days;
       break;
     case 'months':
       days = timeToE * 30;
-      inflight = infectionsBRTime * avgDIPopulation * avgDailyIIUSD * days;
+      inflight = (infectionsBRTime * avgDIPopulation * avgDailyIIUSD) / days;
       break;
     default:
-      inflight = infectionsBRTime * avgDIPopulation * avgDailyIIUSD * timeToE;
+      inflight = (infectionsBRTime * avgDIPopulation * avgDailyIIUSD) / timeToE;
       break;
   }
-  return inflight;
+  return Math.trunc(inflight);
 };
 
 const severeCases = (infectionsBRTime) => Math.trunc(infectionsBRTime * 0.15);
