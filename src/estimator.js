@@ -100,13 +100,13 @@ const covid19ImpactEstimator = (data) => {
   const impact = {
     currentlyInfected: reported * 10,
     get infectionsByRequestedTime() {
-      return infections(this.currentlyInfected, timeToE, periodT);
+      return Math.trunc(infections(this.currentlyInfected, timeToE, periodT));
     },
     get severeCasesByRequestedTime() {
       return severeCases(this.infectionsByRequestedTime);
     },
     get hospitalBedsByRequestedTime() {
-      return bedsByRequestedTime(hospitalBeds, this.severeCasesByRequestedTime);
+      return Math.trunc(bedsByRequestedTime(hospitalBeds, this.severeCasesByRequestedTime));
     },
     get casesForICUByRequestedTime() {
       return casesForICU(this.infectionsByRequestedTime);
@@ -128,13 +128,13 @@ const covid19ImpactEstimator = (data) => {
   const severeImpact = {
     currentlyInfected: reported * 50,
     get infectionsByRequestedTime() {
-      return infections(this.currentlyInfected, timeToE, periodT);
+      return Math.trunc(infections(this.currentlyInfected, timeToE, periodT));
     },
     get severeCasesByRequestedTime() {
       return severeCases(this.infectionsByRequestedTime);
     },
     get hospitalBedsByRequestedTime() {
-      return bedsByRequestedTime(hospitalBeds, this.severeCasesByRequestedTime);
+      return Math.trunc(bedsByRequestedTime(hospitalBeds, this.severeCasesByRequestedTime));
     },
     get casesForICUByRequestedTime() {
       return casesForICU(this.infectionsByRequestedTime);
