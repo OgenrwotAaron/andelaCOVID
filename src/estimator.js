@@ -74,6 +74,12 @@ const dollarsInFlght = (infectionsBRTime, avgDIPopulation, avgDailyIIUSD, timeTo
   return inflight;
 };
 
+const severeCases = (infectionsBRTime) => Math.trunc(infectionsBRTime * 0.15);
+
+const casesForICU = (infectionsBRTime) => infectionsBRTime * 0.05;
+
+const casesForVentilators = (infectionsBRTime) => infectionsBRTime * 0.02;
+
 const covid19ImpactEstimator = (data) => {
   const {
     reportedCases,
@@ -97,16 +103,16 @@ const covid19ImpactEstimator = (data) => {
       return infections(this.currentlyInfected, timeToE, periodT);
     },
     get severeCasesByRequestedTime() {
-      return Math.trunc(this.infectionsByRequestedTime * 0.15);
+      return severeCases(this.infectionsByRequestedTime);
     },
     get hospitalBedsByRequestedTime() {
       return bedsByRequestedTime(hospitalBeds, this.severeCasesByRequestedTime);
     },
     get casesForICUByRequestedTime() {
-      return this.infectionsByRequestedTime * 0.05;
+      return casesForICU(this.infectionsByRequestedTime);
     },
     get casesForVentilatorsByRequestedTime() {
-      return this.infectionsByRequestedTime * 0.02;
+      return casesForVentilators(this.infectionsByRequestedTime) ;
     },
     get dollarsInFlight() {
       return dollarsInFlght(
@@ -125,16 +131,16 @@ const covid19ImpactEstimator = (data) => {
       return infections(this.currentlyInfected, timeToE, periodT);
     },
     get severeCasesByRequestedTime() {
-      return Math.trunc(this.infectionsByRequestedTime * 0.15);
+      return severeCases(this.infectionsByRequestedTime);
     },
     get hospitalBedsByRequestedTime() {
       return bedsByRequestedTime(hospitalBeds, this.severeCasesByRequestedTime);
     },
     get casesForICUByRequestedTime() {
-      return this.infectionsByRequestedTime * 0.05;
+      return casesForICU(this.infectionsByRequestedTime);
     },
     get casesForVentilatorsByRequestedTime() {
-      return this.infectionsByRequestedTime * 0.02;
+      return casesForVentilators(this.infectionsByRequestedTime) ;
     },
     get dollarsInFlight() {
       return dollarsInFlght(
